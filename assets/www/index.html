@@ -179,6 +179,7 @@
 					  saveUser(currentUser);
 					  
 				      doHeartbeat();
+				      doHeartbeat();
 
 				      var southwestOfSF = new Parse.GeoPoint(mylat-100, mylong-100);
 					  var northeastOfSF = new Parse.GeoPoint(mylat+100, mylong+100);
@@ -205,9 +206,9 @@
 		    }		
 		    
 		    function doHeartbeat() {
-		    	navigator.notification.vibrate(10);
-		    	setTimeout(function() {alert('hello');},10);		    	
-		    	navigator.notification.vibrate(100);
+		    	navigator.notification.vibrate(200);
+		    	setTimeout(function() {navigator.notification.vibrate(500);},400);		    	
+		    	setTimeout(function() {},400);		    	
 		    }
 		</script>
     
