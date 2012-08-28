@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>
+        </title>
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.1/jquery.mobile-1.1.1.min.css"
+        />
+        <link rel="stylesheet" href="my.css" />
+        <style>
+            /* App custom styles */
+        </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js">
+        </script>
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.1/jquery.mobile-1.1.1.min.js">
+        </script>
+        <script src="my.js">
+        </script>
+    </head>
+    
+    <body>
+        <!-- Home -->
+        <div data-role="page" data-theme="a" id="page1" style="background: url('http://assets.codiqa.com/ps/24882/97aff93a3bc06308heart2.png') no-repeat">
+            <div data-theme="a" data-role="header">
+                <h3>
+                    Heartbeat
+                </h3>
+            </div>
+            <div data-role="content" style="padding: 15px">
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup">
+                        <label for="toggleswitch1">
+                            Sending out signals...
+                        </label>
+                        <select name="toggleswitch1" id="toggleswitch1" data-theme="a" data-role="slider">
+                            <option value="off">
+                                Inactive
+                            </option>
+                            <option value="on">
+                                Active
+                            </option>
+                        </select>
+                    </fieldset>
+                </div>
+                <div>
+                    <a href="#page4" data-transition="fade">
+                        Login
+                    </a>
+                </div>
+            </div>
+            <div data-theme="a" data-role="footer" data-position="fixed">
+                <div data-role="tabbar" data-iconpos="top" data-theme="a">
+                    <ul>
+                        <li>
+                            <a href="#page1" data-theme="" data-icon="home">
+                                Heart
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#page2" data-theme="" data-icon="star">
+                                Details
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#page7" data-theme="" data-icon="info">
+                                Preferences
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Login -->
+        <div data-role="page" data-theme="a" id="page4" style="background: url('http://assets.codiqa.com/ps/24882/f7bb7aa04e0daf00heart2.png') no-repeat">
+            <div data-theme="a" data-role="header">
+                <h3>
+                    Login
+                </h3>
+            </div>
+            <div data-role="content" style="padding: 15px">
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup" data-mini="true">
+                        <label for="textinput1">
+                            Username:
+                        </label>
+                        <input name="" id="textinput1" placeholder="" value="" type="text">
+                    </fieldset>
+                </div>
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup">
+                        <label for="textinput2">
+                            Password
+                        </label>
+                        <input name="" id="textinput2" placeholder="" value="" type="password">
+                    </fieldset>
+                </div>
+                <input type="submit" value="Login">
+                <div>
+                    <a href="#page5" data-transition="fade">
+                        Register...
+                    </a>
+                </div>
+                <div>
+                    <a href="" data-transition="fade">
+                        Login with Facebook...
+                    </a>
+                </div>
+            </div>
+            <div data-role="tabbar" data-iconpos="top" data-theme="a">
+                <ul>
+                    <li>
+                        <a href="#page1" data-theme="" data-icon="home">
+                            Heart
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#page2" data-theme="" data-icon="star">
+                            Details
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#page7" data-theme="" data-icon="info">
+                            Preferences
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- Register -->
+        <div data-role="page" data-theme="a" id="page5" style="background: url('http://assets.codiqa.com/ps/24882/a111c32a7373e3e4heart2.png') no-repeat">
+            <div data-theme="a" data-role="header">
+                <h3>
+                    Register
+                </h3>
+            </div>
+            <div data-role="content" style="padding: 15px">
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup">
+                        <label for="textinput3">
+                            First name
+                        </label>
+                        <input name="" id="textinput3" placeholder="" value="" type="text">
+                    </fieldset>
+                </div>
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup">
+                        <label for="textinput4">
+                            Last name
+                        </label>
+                        <input name="" id="textinput4" placeholder="" value="" type="text">
+                    </fieldset>
+                </div>
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup">
+                        <label for="textinput5">
+                            Email
+                        </label>
+                        <input name="" id="textinput5" placeholder="" value="" type="text">
+                    </fieldset>
+                </div>
+                <input type="submit" value="Submit">
+            </div>
+            <div data-role="tabbar" data-iconpos="top" data-theme="a">
+                <ul>
+                    <li>
+                        <a href="#page1" data-theme="" data-icon="home">
+                            Heart
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#page2" data-theme="" data-icon="star">
+                            Details
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#page7" data-theme="" data-icon="info">
+                            Preferences
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- Details -->
+        <div data-role="page" data-theme="a" id="page2" style="background: url('http://assets.codiqa.com/ps/24882/e659f64a9a90d4c9heart2.png') no-repeat">
+            <div data-theme="a" data-role="header">
+                <h3>
+                    Your Details
+                </h3>
+            </div>
+            <div data-role="content" style="padding: 15px">
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup" data-type="vertical">
+                        <legend>
+                            Gender:
+                        </legend>
+                        <input name="radiobuttons1" id="radio1" value="male" type="radio">
+                        <label for="radio1">
+                            Male
+                        </label>
+                        <input name="radiobuttons1" id="radio2" value="male" type="radio">
+                        <label for="radio2">
+                            Female
+                        </label>
+                    </fieldset>
+                </div>
+                <div data-role="fieldcontain">
+                    <label for="selectmenu1">
+                        Age:
+                    </label>
+                    <select name="selectmenu1" id="selectmenu1">
+                        <option value="18">
+                            18
+                        </option>
+                        <option value="19">
+                            19
+                        </option>
+                        <option value="24">
+                            24
+                        </option>
+                        <option value="30">
+                            30
+                        </option>
+                        <option value="35">
+                            35
+                        </option>
+                        <option value="40">
+                            40
+                        </option>
+                        <option value="45">
+                            45
+                        </option>
+                        <option value="50">
+                            50
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div data-role="tabbar" data-iconpos="top" data-theme="a">
+                <ul>
+                    <li>
+                        <a href="#page1" data-theme="" data-icon="home">
+                            Heart
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#page2" data-theme="" data-icon="star">
+                            Details
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#page7" data-theme="" data-icon="info">
+                            Preferences
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- Preferences -->
+        <div data-role="page" data-theme="a" id="page7" style="background: url('http://assets.codiqa.com/ps/24882/f413b8164c977ca0heart2.png') no-repeat">
+            <div data-theme="a" data-role="header">
+                <h3>
+                    Preferences
+                </h3>
+            </div>
+            <div data-role="content" style="padding: 15px">
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup" data-type="vertical">
+                        <legend>
+                            Gender:
+                        </legend>
+                        <input name="radiobuttons3" id="radio4" value="male" type="radio">
+                        <label for="radio4">
+                            Male
+                        </label>
+                        <input name="radiobuttons3" id="radio5" value="female" type="radio">
+                        <label for="radio5">
+                            Female
+                        </label>
+                    </fieldset>
+                </div>
+                <div data-role="fieldcontain">
+                    <label for="selectmenu2">
+                        Age range:
+                    </label>
+                    <select name="selectmenu2" id="selectmenu2">
+                        <option value="18">
+                            18-24
+                        </option>
+                        <option value="25">
+                            25-30
+                        </option>
+                        <option value="30">
+                            30-35
+                        </option>
+                        <option value="35">
+                            35-40
+                        </option>
+                        <option value="40">
+                            40-50
+                        </option>
+                        <option value="50">
+                            50-60
+                        </option>
+                    </select>
+                </div>
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup">
+                        <label for="textarea1">
+                            General Preferences:
+                        </label>
+                        <textarea name="" id="textarea1" placeholder=""></textarea>
+                    </fieldset>
+                </div>
+            </div>
+            <div data-role="tabbar" data-iconpos="top" data-theme="a">
+                <ul>
+                    <li>
+                        <a href="#page1" data-theme="" data-icon="home">
+                            Heart
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#page2" data-theme="" data-icon="star">
+                            Details
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#page7" data-theme="" data-icon="info">
+                            Preferences
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <script>
+              //App custom javascript
+        </script>
+    </body>
+
+</html>

@@ -1,0 +1,484 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Cordova</title>
+		<script type="text/javascript" charset="utf-8" src="cordova-2.0.0.js"></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>
+        </title>
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.0/jquery.mobile-1.1.0.min.css"
+        />
+        <link rel="stylesheet" href="my.css" />
+        <style>
+            /* App custom styles */
+        </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js">
+        </script>
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.0/jquery.mobile-1.1.0.min.js">
+        </script>
+        <script src="my.js">
+        </script>
+		<script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.0.20.min.js"></script>
+		
+		<script>
+			Parse.initialize("vfPog226X0uFy3gOZIPP4UfPnIOIMfYbOz0Mdd2z", "uUlgqgNRM0Kakcb6Pn2hKGUIF5o4msQXtM4v0VFm");
+			
+			function runParse() {
+				var TestObject = Parse.Object.extend("TestObject");
+				var testObject = new TestObject();
+				testObject.save({foo: "bar"}, {
+				  success: function(object) {
+				  }
+				});
+			}
+		</script>
+	</head>
+
+    <body onload="window.fbAsyncInit();">
+    
+		<div id="fb-root"></div>
+		<script>
+		  window.fbAsyncInit = function() {
+			  Parse.FacebookUtils.init({
+		      appId      : '259869820782874', // App ID
+		      channelUrl : '//weavey.dyndns.info/channel.html', // Channel File
+		      status     : true, // check login status
+		      cookie     : true, // enable cookies to allow the server to access the session
+		      xfbml      : true  // parse XFBML
+		    });
+		
+		    // Additional initialization code here
+		    console.log('FB.init called');
+		  };
+		
+		  // Load the SDK Asynchronously
+		  (function(d){
+		     var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+		     if (d.getElementById(id)) {return;}
+		     js = d.createElement('script'); js.id = id; js.async = true;
+		     js.src = "//connect.facebook.net/en_US/all.js";
+		     ref.parentNode.insertBefore(js, ref);
+		   }(document));
+		  
+		  function fbLogin() {
+			  Parse.FacebookUtils.logIn(null, {
+				  success: function(user) {
+				    if (!user.existed()) {
+				      showAlert("User signed up and logged in through Facebook!");
+				      sendGeoPoint();
+				    } else {
+				      showAlert("User logged in through Facebook!");
+				      sendGeoPoint();
+				    }
+				  },
+				  error: function(user, error) {
+					  showAlert("User cancelled the Facebook login or did not fully authorize.");
+				  }
+				});
+			}
+		  
+		  function sendGeoPoint() {
+			  var currentUser = Parse.User.current();
+			  if (currentUser) {
+			      // do stuff with the user
+			  } else {
+			      // show the signup or login page
+			  }
+			  
+			  var point = new Parse.GeoPoint({latitude: 40.0, longitude: -30.0});
+			  currentUser.set("location", point);
+			  saveUser(currentUser);
+			}
+		  
+		  function saveUser(currentUser) {
+			  currentUser.save(null, {
+				  success: function(currentUser) {
+				    // The object was saved successfully.
+				  },
+				  error: function(currentUser, error) {
+				    // The save failed.
+				    // error is a Parse.Error with an error code and description.
+				  }
+				});
+			  
+		  }
+		  
+		  function registerUser() {
+			  var user = new Parse.User();
+			  
+			  var username = $('#textinput3').val();
+			  var password = $('#textinput4').val();
+			  var email    = $('#textinput5').val();
+			  
+			  user.set("username", username);
+			  user.set("password", password);
+			  user.set("email", email);
+
+			  user.signUp(null, {
+			    success: function(user) {
+			      // Hooray! Let them use the app now.
+				      showAlert("Account successfully registered. Now log in");
+			    },
+			    error: function(user, error) {
+			      // Show the error message somewhere and let the user try again.
+			      showAlert("Error: " + error.code + " " + error.message);
+			    }
+			  });			  
+		  }
+		  
+		  function loginUser() {
+			  var username = $('#textinput1').val();
+			  var password = $('#textinput2').val();
+
+			  Parse.User.logIn("myname", "mypass", {
+				  success: function(user) {
+				    // Do stuff after successful login.
+				      showAlert("You are now logged in");
+				  },
+				  error: function(user, error) {
+				    // The login failed. Check error to see why.
+				      showAlert("Error: " + error.code + " " + error.message);
+				  }
+				});
+		  }
+		  
+		  // alert dialog dismissed
+		    function alertDismissed() {
+		        // do something
+		        console.log("Alert dismissed");
+		    }
+
+		    // Show a custom alert
+		    //
+		    function showAlert(msg) {
+		        navigator.notification.alert(
+		            msg,  // message
+		            alertDismissed,         // callback
+		            'Game Over',            // title
+		            'Done'                  // buttonName
+		        );
+		    }
+		    
+		    </script>
+    
+        <!-- Home -->
+        <div data-role="page" data-theme="a" id="page1" style="background: url('http://assets.codiqa.com/ps/24882/97aff93a3bc06308heart2.png') no-repeat">
+            <div data-theme="a" data-role="header">
+                <h3>
+                    Heartbeat
+                </h3>
+            </div>
+            <div data-role="content" style="padding: 15px">
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup">
+                        <label for="toggleswitch1">
+                            Sending out signals...
+                        </label>
+                        <select name="toggleswitch1" id="toggleswitch1" data-theme="a" data-role="slider" onclick="sendGeoPoint();">
+                            <option value="off">
+                                Inactive
+                            </option>
+                            <option value="on">
+                                Active
+                            </option>
+                        </select>
+                    </fieldset>
+                </div>
+                <div>
+                    <a href="#page4" data-transition="fade">
+                        Login
+                    </a>
+                </div>
+            </div>
+            <div data-theme="a" data-role="footer" data-position="fixed">
+                <div data-role="tabbar" data-iconpos="top" data-theme="a">
+                    <ul>
+                        <li>
+                            <a href="#page1" data-theme="" data-icon="home">
+                                Heart
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#page2" data-theme="" data-icon="star">
+                                Details
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#page7" data-theme="" data-icon="info">
+                                Preferences
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Login -->
+        <div data-role="page" data-theme="a" id="page4" style="background: url('http://assets.codiqa.com/ps/24882/f7bb7aa04e0daf00heart2.png') no-repeat">
+            <div data-theme="a" data-role="header">
+                <h3>
+                    Login
+                </h3>
+            </div>
+            <div data-role="content" style="padding: 15px">
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup" data-mini="true">
+                        <label for="textinput1">
+                            Username:
+                        </label>
+                        <input name="" id="textinput1" placeholder="" value="" type="text">
+                    </fieldset>
+                </div>
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup">
+                        <label for="textinput2">
+                            Password
+                        </label>
+                        <input name="" id="textinput2" placeholder="" value="" type="password">
+                    </fieldset>
+                </div>
+                <input type="submit" value="Login" onclick="loginUser();">
+                <div>
+                    <a href="#page5" data-transition="fade">
+                        Register...
+                    </a>
+                </div>
+                <div>
+                    <a href="" data-transition="fade" onclick="fbLogin();">
+                        Login with Facebook...
+                    </a>
+                </div>
+            </div>
+            <div data-role="tabbar" data-iconpos="top" data-theme="a">
+                <ul>
+                    <li>
+                        <a href="#page1" data-theme="" data-icon="home">
+                            Heart
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#page2" data-theme="" data-icon="star">
+                            Details
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#page7" data-theme="" data-icon="info">
+                            Preferences
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- Register -->
+        <div data-role="page" data-theme="a" id="page5" style="background: url('http://assets.codiqa.com/ps/24882/a111c32a7373e3e4heart2.png') no-repeat">
+            <div data-theme="a" data-role="header">
+                <h3>
+                    Register
+                </h3>
+            </div>
+            <div data-role="content" style="padding: 15px">
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup">
+                        <label for="textinput3">
+                            First name
+                        </label>
+                        <input name="" id="textinput3" placeholder="" value="" type="text">
+                    </fieldset>
+                </div>
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup">
+                        <label for="textinput4">
+                            Last name
+                        </label>
+                        <input name="" id="textinput4" placeholder="" value="" type="text">
+                    </fieldset>
+                </div>
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup">
+                        <label for="textinput5">
+                            Email
+                        </label>
+                        <input name="" id="textinput5" placeholder="" value="" type="text">
+                    </fieldset>
+                </div>
+                <input type="submit" value="Submit" onclick="registerUser();">
+            </div>
+            <div data-role="tabbar" data-iconpos="top" data-theme="a">
+                <ul>
+                    <li>
+                        <a href="#page1" data-theme="" data-icon="home">
+                            Heart
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#page2" data-theme="" data-icon="star">
+                            Details
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#page7" data-theme="" data-icon="info">
+                            Preferences
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- Details -->
+        <div data-role="page" data-theme="a" id="page2" style="background: url('http://assets.codiqa.com/ps/24882/e659f64a9a90d4c9heart2.png') no-repeat">
+            <div data-theme="a" data-role="header">
+                <h3>
+                    Your Details
+                </h3>
+            </div>
+            <div data-role="content" style="padding: 15px">
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup" data-type="vertical">
+                        <legend>
+                            Gender:
+                        </legend>
+                        <input name="radiobuttons1" id="radio1" value="male" type="radio">
+                        <label for="radio1">
+                            Male
+                        </label>
+                        <input name="radiobuttons1" id="radio2" value="male" type="radio">
+                        <label for="radio2">
+                            Female
+                        </label>
+                    </fieldset>
+                </div>
+                <div data-role="fieldcontain">
+                    <label for="selectmenu1">
+                        Age:
+                    </label>
+                    <select name="selectmenu1" id="selectmenu1">
+                        <option value="18">
+                            18
+                        </option>
+                        <option value="19">
+                            19
+                        </option>
+                        <option value="24">
+                            24
+                        </option>
+                        <option value="30">
+                            30
+                        </option>
+                        <option value="35">
+                            35
+                        </option>
+                        <option value="40">
+                            40
+                        </option>
+                        <option value="45">
+                            45
+                        </option>
+                        <option value="50">
+                            50
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div data-role="tabbar" data-iconpos="top" data-theme="a">
+                <ul>
+                    <li>
+                        <a href="#page1" data-theme="" data-icon="home">
+                            Heart
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#page2" data-theme="" data-icon="star">
+                            Details
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#page7" data-theme="" data-icon="info">
+                            Preferences
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- Preferences -->
+        <div data-role="page" data-theme="a" id="page7" style="background: url('http://assets.codiqa.com/ps/24882/f413b8164c977ca0heart2.png') no-repeat">
+            <div data-theme="a" data-role="header">
+                <h3>
+                    Preferences
+                </h3>
+            </div>
+            <div data-role="content" style="padding: 15px">
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup" data-type="vertical">
+                        <legend>
+                            Gender:
+                        </legend>
+                        <input name="radiobuttons3" id="radio4" value="male" type="radio">
+                        <label for="radio4">
+                            Male
+                        </label>
+                        <input name="radiobuttons3" id="radio5" value="female" type="radio">
+                        <label for="radio5">
+                            Female
+                        </label>
+                    </fieldset>
+                </div>
+                <div data-role="fieldcontain">
+                    <label for="selectmenu2">
+                        Age range:
+                    </label>
+                    <select name="selectmenu2" id="selectmenu2">
+                        <option value="18">
+                            18-24
+                        </option>
+                        <option value="25">
+                            25-30
+                        </option>
+                        <option value="30">
+                            30-35
+                        </option>
+                        <option value="35">
+                            35-40
+                        </option>
+                        <option value="40">
+                            40-50
+                        </option>
+                        <option value="50">
+                            50-60
+                        </option>
+                    </select>
+                </div>
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup">
+                        <label for="textarea1">
+                            General Preferences:
+                        </label>
+                        <textarea name="" id="textarea1" placeholder=""></textarea>
+                    </fieldset>
+                </div>
+            </div>
+            <div data-role="tabbar" data-iconpos="top" data-theme="a">
+                <ul>
+                    <li>
+                        <a href="#page1" data-theme="" data-icon="home">
+                            Heart
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#page2" data-theme="" data-icon="star">
+                            Details
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#page7" data-theme="" data-icon="info">
+                            Preferences
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <script>
+              //App custom javascript
+        </script>
+
+    </body>
+
+</html>
