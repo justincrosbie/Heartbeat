@@ -181,13 +181,14 @@
 				      doHeartbeat();
 				      doHeartbeat();
 
-				      var southwestOfSF = new Parse.GeoPoint(mylat-100, mylong-100);
-					  var northeastOfSF = new Parse.GeoPoint(mylat+100, mylong+100);
+				      var southwestOfSF = new Parse.GeoPoint(mylat-1000, mylong-1000);
+					  var northeastOfSF = new Parse.GeoPoint(mylat+1000, mylong+1000);
 
 					  var query = new Parse.Query(currentUser);
 					  query.withinGeoBox("location", southwestOfSF, northeastOfSF);
 					  query.find({
 					    success: function(matches) {
+					    	doHeartbeat();
 					    	doHeartbeat();
 					    }
 					  });
@@ -208,7 +209,7 @@
 		    function doHeartbeat() {
 		    	navigator.notification.vibrate(200);
 		    	setTimeout(function() {navigator.notification.vibrate(500);},400);		    	
-		    	setTimeout(function() {},400);		    	
+		    	setTimeout(function() {console.log("pausing...")},400);		    	
 		    }
 		</script>
     
