@@ -171,7 +171,9 @@
 		    //
 		    function onWatchLocationSuccess(position) {
 		    	
-				  var currentUser = Parse.User.current();
+		    	showAlert("Heartbeat is scanning...");
+
+		    	var currentUser = Parse.User.current();
 				  if (currentUser) {
 					  var mylat = position.coords.latitude;
 					  var mylong = position.coords.longitude;
@@ -192,21 +194,20 @@
 						  var user = Parse.Object.extend("User");
 						  var query = new Parse.Query(user);
 						  
+						  query.notEqualTo("username", currentUser.get("username"));
 						  query.withinGeoBox("location", southwestOfSF, northeastOfSF);
 						  query.contains("genprefs", genprefs[i]);
 
 						  query.find({
 						    success: function(matches) {
-								for(i=0; i<matches.length; i++) { 
-							    	showAlert("found: " + matches[i].get("genprefs"));
+								for(j=0; j<matches.length; j++) { 
+							    	showAlert("found: " + matches[j].get("genprefs"));
 							    	doHeartbeat();
 							    	doHeartbeat();
 								}
 						    }
 						  });
 	  				  }
-
-					  
 				  } else {
 				      // show the signup or login page
 				      showAlert("Please Log in to save your location");
@@ -264,7 +265,6 @@
                 <div data-role="fieldcontain">
                     <fieldset data-role="controlgroup">
                         <label for="toggleswitch1">
-                            Sending out signals...
                         </label>
                         <select name="toggleswitch1" id="toggleswitch1" data-theme="a" data-role="slider" onchange="toggleWatchLocation();">
                             <option value="off">
