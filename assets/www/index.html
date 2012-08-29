@@ -170,6 +170,7 @@
 		    // onSuccess Geolocation
 		    //
 		    function onWatchLocationSuccess(position) {
+		    	
 				  var currentUser = Parse.User.current();
 				  if (currentUser) {
 					  var mylat = position.coords.latitude;
@@ -178,21 +179,33 @@
 					  currentUser.set("location", point);
 					  saveUser(currentUser);
 					  
-				      doHeartbeat();
-				      doHeartbeat();
+			    	  var llat = mylat-0.1;
+			    	  var llong = mylong-0.1;
+			    	  var ulat = mylat+0.1;
+			    	  var ulong = mylong+0.1;
+			    	  
+				      var southwestOfSF = new Parse.GeoPoint({latitude: llat, longitude: llong});
+					  var northeastOfSF = new Parse.GeoPoint({latitude: ulat, longitude: ulong});
 
-				      var southwestOfSF = new Parse.GeoPoint(mylat-1000, mylong-1000);
-					  var northeastOfSF = new Parse.GeoPoint(mylat+1000, mylong+1000);
+					  var genprefs = currentUser.get("genprefs").split(" ");
+					  for(i=0; i<genprefs.length; i++) { 
+						  var user = Parse.Object.extend("User");
+						  var query = new Parse.Query(user);
+						  
+						  query.withinGeoBox("location", southwestOfSF, northeastOfSF);
+						  query.contains("genprefs", genprefs[i]);
 
-					  var query = new Parse.Query(currentUser);
-					  query.withinGeoBox("location", southwestOfSF, northeastOfSF);
-					  query.containedIn("genprefs", currentUser.get("genprefs"));
-					  query.find({
-					    success: function(matches) {
-					    	doHeartbeat();
-					    	doHeartbeat();
-					    }
-					  });
+						  query.find({
+						    success: function(matches) {
+								for(i=0; i<matches.length; i++) { 
+							    	showAlert("found: " + matches[i].get("genprefs"));
+							    	doHeartbeat();
+							    	doHeartbeat();
+								}
+						    }
+						  });
+	  				  }
+
 					  
 				  } else {
 				      // show the signup or login page
@@ -208,9 +221,8 @@
 		    }		
 		    
 		    function doHeartbeat() {
-		    	navigator.notification.vibrate(200);
+		    	setTimeout(function() {navigator.notification.vibrate(200);},400);		    	
 		    	setTimeout(function() {navigator.notification.vibrate(500);},400);		    	
-		    	setTimeout(function() {console.log("pausing...")},400);		    	
 		    }
 		    
 		    function saveDetails() {
