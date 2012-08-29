@@ -186,6 +186,7 @@
 
 					  var query = new Parse.Query(currentUser);
 					  query.withinGeoBox("location", southwestOfSF, northeastOfSF);
+					  query.containedIn("genprefs", currentUser.get("genprefs"));
 					  query.find({
 					    success: function(matches) {
 					    	doHeartbeat();
@@ -211,10 +212,37 @@
 		    	setTimeout(function() {navigator.notification.vibrate(500);},400);		    	
 		    	setTimeout(function() {console.log("pausing...")},400);		    	
 		    }
+		    
+		    function saveDetails() {
+				  var currentUser = Parse.User.current();
+				  if (currentUser) {
+					  currentUser.set("gender", $("#gender").val());
+					  currentUser.set("age", $("#age").val());
+					  saveUser(currentUser);
+					  
+				      showAlert("Your details have been saved");
+				  } else {
+				      showAlert("Please log in to save your details");
+				  }
+		    }
+		    
+		    function savePreferences() {
+				  var currentUser = Parse.User.current();
+				  if (currentUser) {
+					  currentUser.set("prefgender", $("#prefgender").val());
+					  currentUser.set("prefage", $("#prefage").val());
+					  currentUser.set("genprefs", $("#genprefs").val());
+					  saveUser(currentUser);
+					  
+				      showAlert("Your preferences have been saved");
+				  } else {
+				      showAlert("Please log in to save your preferences");
+				  }
+		    }
 		</script>
     
         <!-- Home -->
-        <div data-role="page" data-theme="a" id="page1" style="background: url('http://assets.codiqa.com/ps/24882/97aff93a3bc06308heart2.png') no-repeat">
+        <div data-role="page" data-theme="a" id="page1" style="background: url('http://assets.codiqa.com/ps/24882/97aff93a3bc06308heart2.png') no-repeat center center">
             <div data-theme="a" data-role="header">
                 <h3>
                     Heartbeat
@@ -265,7 +293,7 @@
             </div>
         </div>
         <!-- Login -->
-        <div data-role="page" data-theme="a" id="page4" style="background: url('http://assets.codiqa.com/ps/24882/f7bb7aa04e0daf00heart2.png') no-repeat">
+        <div data-role="page" data-theme="a" id="page4" style="background: url('http://assets.codiqa.com/ps/24882/f7bb7aa04e0daf00heart2.png') no-repeat center center">
             <div data-theme="a" data-role="header">
                 <h3>
                     Login
@@ -321,7 +349,7 @@
             </div>
         </div>
         <!-- Register -->
-        <div data-role="page" data-theme="a" id="page5" style="background: url('http://assets.codiqa.com/ps/24882/a111c32a7373e3e4heart2.png') no-repeat">
+        <div data-role="page" data-theme="a" id="page5" style="background: url('http://assets.codiqa.com/ps/24882/a111c32a7373e3e4heart2.png') no-repeat center center">
             <div data-theme="a" data-role="header">
                 <h3>
                     Register
@@ -383,7 +411,7 @@
             </div>
         </div>
         <!-- Details -->
-        <div data-role="page" data-theme="a" id="page2" style="background: url('http://assets.codiqa.com/ps/24882/e659f64a9a90d4c9heart2.png') no-repeat">
+        <div data-role="page" data-theme="a" id="page2" style="background: url('http://assets.codiqa.com/ps/24882/e659f64a9a90d4c9heart2.png') no-repeat center center">
             <div data-theme="a" data-role="header">
                 <h3>
                     Your Details
@@ -395,11 +423,11 @@
                         <legend>
                             Gender:
                         </legend>
-                        <input name="radiobuttons1" id="radio1" value="male" type="radio">
+                        <input name="gender" id="gender" value="male" type="radio">
                         <label for="radio1">
                             Male
                         </label>
-                        <input name="radiobuttons1" id="radio2" value="male" type="radio">
+                        <input name="gender" id="gender" value="male" type="radio">
                         <label for="radio2">
                             Female
                         </label>
@@ -409,7 +437,7 @@
                     <label for="selectmenu1">
                         Age:
                     </label>
-                    <select name="selectmenu1" id="selectmenu1">
+                    <select name="age" id="age">
                         <option value="18">
                             18
                         </option>
@@ -436,6 +464,7 @@
                         </option>
                     </select>
                 </div>
+                <input type="submit" value="Submit" onclick="saveDetails();">
             </div>
             <div data-role="tabbar" data-iconpos="top" data-theme="a">
                 <ul>
@@ -458,7 +487,7 @@
             </div>
         </div>
         <!-- Preferences -->
-        <div data-role="page" data-theme="a" id="page7" style="background: url('http://assets.codiqa.com/ps/24882/f413b8164c977ca0heart2.png') no-repeat">
+        <div data-role="page" data-theme="a" id="page7" style="background: url('http://assets.codiqa.com/ps/24882/f413b8164c977ca0heart2.png') no-repeat center center">
             <div data-theme="a" data-role="header">
                 <h3>
                     Preferences
@@ -470,11 +499,11 @@
                         <legend>
                             Gender:
                         </legend>
-                        <input name="radiobuttons3" id="radio4" value="male" type="radio">
+                        <input name="prefgender" id="prefgender" value="male" type="radio">
                         <label for="radio4">
                             Male
                         </label>
-                        <input name="radiobuttons3" id="radio5" value="female" type="radio">
+                        <input name="prefgender" id="prefgender" value="female" type="radio">
                         <label for="radio5">
                             Female
                         </label>
@@ -484,7 +513,7 @@
                     <label for="selectmenu2">
                         Age range:
                     </label>
-                    <select name="selectmenu2" id="selectmenu2">
+                    <select name="prefage" id="prefage">
                         <option value="18">
                             18-24
                         </option>
@@ -510,9 +539,10 @@
                         <label for="textarea1">
                             General Preferences:
                         </label>
-                        <textarea name="" id="textarea1" placeholder=""></textarea>
+                        <textarea name="" id="genprefs" placeholder=""></textarea>
                     </fieldset>
                 </div>
+                <input type="submit" value="Submit" onclick="savePreferences();">
             </div>
             <div data-role="tabbar" data-iconpos="top" data-theme="a">
                 <ul>
