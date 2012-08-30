@@ -23,22 +23,15 @@
 		
 		<script>
 			Parse.initialize("vfPog226X0uFy3gOZIPP4UfPnIOIMfYbOz0Mdd2z", "uUlgqgNRM0Kakcb6Pn2hKGUIF5o4msQXtM4v0VFm");
-			
-			function runParse() {
-				var TestObject = Parse.Object.extend("TestObject");
-				var testObject = new TestObject();
-				testObject.save({foo: "bar"}, {
-				  success: function(object) {
-				  }
-				});
-			}
 		</script>
 	</head>
 
-    <body onload="window.fbAsyncInit();">
+    <body>
     
 		<div id="fb-root"></div>
 		<script>
+		
+		
 		  window.fbAsyncInit = function() {
 			  Parse.FacebookUtils.init({
 		      appId      : '259869820782874', // App ID
@@ -78,6 +71,12 @@
 				});
 			}
 		  
+			document.addEventListener("deviceready", onDeviceReady, false);
+		  
+		  function onDeviceReady() {
+			  loadUser();
+		  }
+		  
 		  function saveUser(currentUser) {
 			  currentUser.save(null, {
 				  success: function(currentUser) {
@@ -88,6 +87,18 @@
 				    // error is a Parse.Error with an error code and description.
 				  }
 				});
+			  
+		  }
+		  
+		  function loadUser() {
+			  var currentUser = Parse.User.current();
+			  if (currentUser) {
+				  $("#genprefs").val( currentUser.get("genprefs") );
+				  $("#prefage").val( currentUser.get("prefage") );
+				  $("#prefgender").val( currentUser.get("prefgender") );
+				  $("#age").val( currentUser.get("age") );
+				  $("#gender").val( currentUser.get("gender") );
+			  }
 			  
 		  }
 		  
@@ -140,19 +151,33 @@
 		        console.log("Alert dismissed");
 		    }
 
+			var is_debug = false;
 		    // Show a custom alert
 		    //
 		    function showAlert(msg) {
-		        navigator.notification.alert(
-		            msg,  // message
-		            alertDismissed,         // callback
-		            'Game Over',            // title
-		            'Done'                  // buttonName
-		        );
+		    	
+		    	if ( is_debug ) {
+			        navigator.notification.alert(
+				            msg,  // message
+				            alertDismissed,         // callback
+				            'Heartbeat Alert',      // title
+				            'Done'                  // buttonName
+				        );
+		    	}
 		    }
 		    
 		    var watchID = null;
-
+			
+		    function toggleDebug() {
+		    	var debugToggle = $("#toggleswitch2").val();
+		    	
+		    	if ( debugToggle == 'on' ) {
+		    		is_debug = true;
+		    	} else {
+		    		is_debug = false;
+		    	}
+		    }
+		    
 		    function toggleWatchLocation() {
 		    	var watchToggle = $("#toggleswitch1").val();
 		    	
@@ -195,13 +220,15 @@
 						  var query = new Parse.Query(user);
 						  
 						  query.notEqualTo("username", currentUser.get("username"));
+						  query.equalTo("gender", currentUser.get("prefgender"));
 						  query.withinGeoBox("location", southwestOfSF, northeastOfSF);
 						  query.contains("genprefs", genprefs[i]);
 
 						  query.find({
 						    success: function(matches) {
+						    	showAlert("Found " + matches.length + " matches");
 								for(j=0; j<matches.length; j++) { 
-							    	showAlert("found: " + matches[j].get("genprefs"));
+							    	showAlert("found " + matches[j].get("username") + ": " + matches[j].get("genprefs"));
 							    	doHeartbeat();
 							    	doHeartbeat();
 								}
@@ -280,6 +307,20 @@
                     <a href="#page4" data-transition="fade">
                         Login
                     </a>
+                </div>
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup">
+                        <label for="toggleswitch2">
+                        </label>
+                        <select name="toggleswitch2" id="toggleswitch2" data-theme="a" data-role="slider" onchange="toggleDebug();">
+                            <option value="off">
+                                Debug Off
+                            </option>
+                            <option value="on">
+                                Debug On
+                            </option>
+                        </select>
+                    </fieldset>
                 </div>
             </div>
             <div data-theme="a" data-role="footer" data-position="fixed">
